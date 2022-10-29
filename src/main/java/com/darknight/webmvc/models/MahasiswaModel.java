@@ -1,7 +1,6 @@
 package com.darknight.webmvc.models;
 
 import com.darknight.webmvc.entities.MahasiswaEntity;
-import com.darknight.webmvc.models.JurusanModel;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.BeanUtils;

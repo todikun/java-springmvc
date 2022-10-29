@@ -3,35 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <title>Gedung</title>
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+          rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
+          crossorigin="anonymous">
+
 </head>
 <body>
-    <h1>Index Gedung</h1>
-    <a th:href="@{~/gedung/add}">New Gedung</a>
-    <table>
-        <thead>
-        <tr>
-            <td>Kode</td>
-            <td>Nama Gedung</td>
-            <td>Jumlah Lantai</td>
-            <td>Action</td>
-        </tr>
-        </thead>
+    <div class="container">
+        <h1>Index Gedung</h1>
+        <a th:href="@{~/gedung/add}" class="btn btn-primary">New Gedung</a>
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Kode</th>
+                <th scope="col">Nama Gedung</th>
+                <th scope="col">Jumlah Lantai</th>
+                <th scope="col">Action</th>
+            </tr>
+            </thead>
+            <tbody class="table-group-divider">
+            <tr th:each="data : ${dataList}">
+                <td th:text="${data.code}"></td>
+                <td th:text="${data.name}"></td>
+                <td th:text="${data.jmlLantai}"></td>
+                <td>
+                    <a th:href="@{~/gedung/detail/{id}(id=${data.id})}" class="btn btn-secondary">Detail</a>
+                    <a th:href="@{~/gedung/edit/{id}(id=${data.id})}" class="btn btn-warning">Edit</a>
+                    <form th:action="@{~/gedung/delete}" method="post" class="d-inline" onsubmit="return confirm('Yakin hapus data?')">
+                        <input type="hidden" name="id" th:value="${data.id}">
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
 
-        <tbody>
-        <tr th:each="data : ${dataList}">
-            <td th:text="${data.code}"></td>
-            <td th:text="${data.name}"></td>
-            <td th:text="${data.jmlLantai}"></td>
-            <td>
-                <a th:href="@{~/gedung/detail/{id}(id=${data.id})}">Detail</a> &nbsp;
-                <a th:href="@{~/gedung/edit/{id}(id=${data.id})}">Edit</a> &nbsp;
-                <form th:action="@{~/gedung/delete}" method="post">
-                    <input type="hidden" name="id" th:value="${data.id}">
-                    <button type="submit">Delete</button>
-                </form>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+    </div>
 </body>
 </html>

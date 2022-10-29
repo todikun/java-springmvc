@@ -17,7 +17,9 @@
         <label>Fakultas</label> <br>
         <select name="fakultas.id">
             <option value=""></option>
-            <option th:each="fakultas : ${fakultasList}" th:value="${fakultas.id}" th:text="${fakultas.name}"></option>
+            <option th:each="fakultas : ${fakultasList}" th:value="${fakultas.id}"
+                    th:text="${fakultas.name}" th:selected="${fakultas.id==data.fakultasId}">
+            </option>
         </select>
 
         <button type="submit">Update</button>

@@ -49,12 +49,12 @@ public class FakultasServiceImpl implements FakultasService{
 
     @Override
     public Optional<FakultasModel> update(String id, FakultasModel request) {
-        Optional<FakultasEntity> result = this.repo.findById(id);
-        if (result.isEmpty()) {
+        Optional<FakultasEntity> fakultas = this.repo.findById(id);
+        if (fakultas.isEmpty()) {
             return Optional.empty();
         }
 
-        FakultasEntity data = result.get();
+        FakultasEntity data = fakultas.get();
         BeanUtils.copyProperties(request, data);
         data.setId(id);
         data.setUpdatedAt(LocalDateTime.now());
@@ -68,15 +68,18 @@ public class FakultasServiceImpl implements FakultasService{
 
     @Override
     public Optional<FakultasModel> delete(String id) {
-        Optional<FakultasEntity> result = this.repo.findById(id);
-        if (result.isEmpty()) {
+        FakultasEntity fakultas = this.repo.findById(id).orElse(null);
+        if (fakultas == null) {
             return Optional.empty();
         }
 
+        if (!fakultas.getJurusans().isEmpty()) {
+            fakultas.getJurusans().clear();
+        }
+
         try {
-            FakultasEntity data = result.get();
-            this.repo.delete(data);
-            return Optional.of(new FakultasModel(data));
+            this.repo.delete(fakultas);
+            return Optional.of(new FakultasModel(fakultas));
         } catch (Exception e) {
             return Optional.empty();
         }

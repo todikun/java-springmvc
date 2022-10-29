@@ -2,6 +2,7 @@ package com.darknight.webmvc.services;
 
 import com.darknight.webmvc.entities.FakultasEntity;
 import com.darknight.webmvc.entities.JurusanEntity;
+import com.darknight.webmvc.entities.MahasiswaEntity;
 import com.darknight.webmvc.models.JurusanModel;
 import com.darknight.webmvc.repos.JurusanRepo;
 import org.springframework.beans.factory.annotation.Autowired;

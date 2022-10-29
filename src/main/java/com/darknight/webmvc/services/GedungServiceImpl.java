@@ -68,15 +68,18 @@ public class GedungServiceImpl implements GedungService{
 
     @Override
     public Optional<GedungModel> delete(String id) {
-        Optional<GedungEntity> result = this.repo.findById(id);
-        if (result.isEmpty()) {
+        GedungEntity gedung = this.repo.findById(id).orElse(null);
+        if (gedung == null) {
             return Optional.empty();
         }
 
+        if (!gedung.getRuangs().isEmpty()) {
+            gedung.getRuangs().clear();
+        }
+
         try {
-            GedungEntity data = result.get();
-            this.repo.delete(data);
-            return Optional.of(new GedungModel(data));
+            this.repo.delete(gedung);
+            return Optional.of(new GedungModel(gedung));
         } catch (Exception e) {
             return Optional.empty();
         }

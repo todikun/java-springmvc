@@ -8,6 +8,7 @@
     <h1>Edit Mahasiswa</h1>
     <form th:action="@{~/mahasiswa/update}" method="post">
         <label>Name</label> <br>
+        <input type="hidden" name="id" th:value="${data.id}">
         <input type="text" name="name" id="name" th:value="${data.name}"> <br>
 
         <label>Jenis Kelamin</label> <br>
@@ -27,8 +28,9 @@
 
         <label>Jurusan</label> <br>
         <select name="jurusan.id">
-            <option value="" th:placeholder="${data.jurusan.name}"></option>
-            <option th:each="data : ${jurusanList}" th:value="${data.id}" th:text="${data.name}"></option>
+            <option value=""></option>
+            <option th:each="jurusan : ${jurusanList}" th:value="${jurusan.id}"
+                    th:text="${jurusan.name}" th:selected="${jurusan.id==data.jurusanId} " ></option>
         </select>
 
         <button type="submit">Update</button>

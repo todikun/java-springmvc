@@ -42,7 +42,7 @@ public class GedungEntity {
     private String updatedBy;
 
     // relationship
-    @OneToMany(mappedBy = "gedung", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "gedung", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<RuangEntity> ruangs = new HashSet<>();
 
     public GedungEntity() {
