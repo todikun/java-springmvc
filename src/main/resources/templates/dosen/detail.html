@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Dosen</title>
+</head>
+<body>
+    <h1>Detail Dosen</h1>
+    <form action="#" method="post">
+        <label>NIP</label> <br>
+        <input type="text" name="nip" id="nip" th:value="${data.nip}"> <br>
+
+        <label>Nama</label> <br>
+        <input type="text" name="name" id="name" th:value="${data.name}"> <br>
+
+        <label>Jenis Kelamin</label> <br>
+        <input type="text" name="jk" id="jk" th:value="${data.jk}"> <br>
+
+        <label>Alamat</label> <br>
+        <input type="text" name="alamat" id="alamat" th:value="${data.alamat}"> <br>
+
+        <label>Gelar</label> <br>
+        <input type="text" name="gelar" id="gelar" th:value="${data.gelar}"> <br>
+    </form>
+</body>
+</html>

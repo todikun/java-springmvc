@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Dosen</title>
+</head>
+<body>
+    <h1>Add Dosen</h1>
+    <form th:action="@{~/dosen/save}" method="post">
+        <label>NIP</label> <br>
+        <input type="text" name="nip" id="nip"> <br>
+
+        <label>Nama</label> <br>
+        <input type="text" name="name" id="name"> <br>
+
+        <label>Jenis Kelamin</label> <br>
+        <input type="text" name="jk" id="jk"> <br>
+
+        <label>Alamat</label> <br>
+        <input type="text" name="alamat" id="alamat"> <br>
+
+        <label>Gelar</label> <br>
+        <input type="text" name="gelar" id="gelar"> <br>
+
+        <button type="submit">Simpan</button>
+    </form>
+</body>
+</html>

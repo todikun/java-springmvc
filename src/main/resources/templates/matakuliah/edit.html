@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Mata Kuliah</title>
+</head>
+<body>
+    <h1>Edit Mata Kuliah</h1>
+    <form th:action="@{~/matakuliah/update}" method="post">
+        <label>Kode</label> <br>
+        <input type="hidden" name="id" id="id" th:value="${data.id}">
+        <input type="text" name="code" id="code" th:value="${data.code}"> <br>
+
+        <label>Nama</label> <br>
+        <input type="text" name="name" id="name" th:value="${data.name}"> <br>
+
+        <label>Sks</label> <br>
+        <input type="number" name="sks" id="sks" th:value="${data.sks}"> <br>
+
+        <button type="submit">Update</button>
+    </form>
+</body>
+</html>
