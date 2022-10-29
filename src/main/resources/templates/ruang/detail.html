@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Ruang</title>
+</head>
+<body>
+    <h1>Detail Ruang</h1>
+    <form action="#">
+        <label>Kode</label> <br>
+        <input type="text" readonly="readonly" name="code" id="code" th:value="${data.code}"> <br>
+
+        <label>Nama</label> <br>
+        <input type="text" readonly="readonly" name="name" id="name" th:value="${data.name}"> <br>
+
+        <label>Lantaike</label> <br>
+        <input type="text" readonly="readonly" name="lantaiKe" id="lantaiKe" th:value="${data.lantaiKe}"> <br>
+
+        <label>Gedung</label> <br>
+        <input type="text" readonly="readonly" name="gedung" id="gedung" th:value="${data.gedung.name}">
+    </form>
+</body>
+</html>

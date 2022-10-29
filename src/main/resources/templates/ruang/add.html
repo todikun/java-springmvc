@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Ruang</title>
+</head>
+<body>
+    <h1>Add Ruang</h1>
+    <form th:action="@{~/ruang/save}" method="post">
+        <label>Kode</label> <br>
+        <input type="text" name="code" id="code"> <br>
+
+        <label>Nama</label> <br>
+        <input type="text" name="name" id="name"> <br>
+
+        <label>Lantaike</label> <br>
+        <input type="number" name="lantaiKe" id="lantaiKe"> <br>
+
+        <label>Gedung</label> <br>
+        <select name="gedung.id">
+            <option value=""></option>
+            <option th:each="gedung : ${gedungList}" th:value="${gedung.id}"
+                    th:text="${gedung.name}" >
+            </option>
+        </select> <br>
+
+        <button type="submit">Simpan</button>
+    </form>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Mata Kuliah</title>
+</head>
+<body>
+    <h1>Index Mata Kuliah</h1>
+    <a th:href="@{~/matakuliah/add}">New Mata Kuliah</a>
+    <table>
+        <thead>
+        <tr>
+            <td>Kode</td>
+            <td>Nama</td>
+            <td>Sks</td>
+            <td>Action</td>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="data : ${dataList}">
+            <td th:text="${data.code}"></td>
+            <td th:text="${data.name}"></td>
+            <td th:text="${data.sks}"></td>
+            <td>
+                <a th:href="@{~/matakuliah/detail/{id}(id=${data.id})}">Detail</a>
+                <a th:href="@{~/matakuliah/edit/{id}(id=${data.id})}">Edit</a>
+                <form th:action="@{~/matakuliah/delete}" method="post">
+                    <input type="hidden" name="id" th:value="${data.id}">
+                    <button type="submit">Delete</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</body>
+</html>

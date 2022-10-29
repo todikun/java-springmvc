@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Ruang</title>
+</head>
+<body>
+    <h1>Index Ruang</h1>
+    <a th:href="@{~/ruang/add}">New Ruang</a>
+    <table>
+        <thead>
+        <tr>
+            <td>Kode</td>
+            <td>Name</td>
+            <td>Lantaike</td>
+            <td>Gedung</td>
+            <td>Action</td>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="data : ${dataList}">
+            <td th:text="${data.code}"></td>
+            <td th:text="${data.name}"></td>
+            <td th:text="${data.lantaiKe}"></td>
+            <td th:text="${data.Gedung.name}"></td>
+            <td>
+                <a th:href="@{~/ruang/detail/{id}(id=${data.id})}">Detail</a>
+                <a th:href="@{~/ruang/edit/{id}(id=${data.id})}">Edit</a>
+                <form th:action="@{~/ruang/delete}" method="post">
+                    <input type="hidden" name="id" th:value="${data.id}">
+                    <button type="submit">Delete</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</body>
+</html>
