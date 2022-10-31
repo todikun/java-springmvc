@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/meta :: html_head}">
+</head>
+
+<body>
+<div class="wrapper">
+    <nav th:replace="~{fragments/sidebar :: sidebar}">
+    </nav>
+
+    <div class="main">
+        <nav th:replace="~{fragments/navbar :: navbar}">
+        </nav>
+
+        <main class="content">
+            <div class="container-fluid p-0">
+
+                <h1 class="h3 mb-3">Mahasiswa</h1>
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <a th:href="@{~/mahasiswa/add}"
+                                   class="btn btn-primary">Add Mahasiswa</a>
+                            </div>
+                            <div class="card-body">
+
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">Nama</th>
+                                        <th scope="col">Jk</th>
+                                        <th scope="col">Alamat</th>
+                                        <th scope="col" width="20%">Ttl</th>
+                                        <th scope="col">Agama</th>
+                                        <th scope="col">Jurusan</th>
+                                        <th scope="col">Action</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody class="table-group-divider">
+                                    <tr th:each="data : ${dataList}">
+                                        <td th:text="${data.name}"></td>
+                                        <td th:text="${data.jk}"></td>
+                                        <td th:text="${data.alamat}"></td>
+                                        <td th:text="${data.tmpLahir}+', '+${#temporals.format(data.tglLahir, 'dd-MM-yyyy')}"></td>
+                                        <td th:text="${data.agama}"></td>
+                                        <td th:text="${data.jurusan.name}"></td>
+                                        <td>
+                                            <a th:href="@{~/mahasiswa/detail/{id}(id=${data.id})}"
+                                               class="btn btn-secondary">Detail</a>
+                                            <a th:href="@{~/mahasiswa/edit/{id}(id=${data.id})}"
+                                               class="btn btn-warning mx-1">Edit</a>
+                                            <form th:action="@{~/mahasiswa/delete}" method="post"
+                                                  class="d-inline"
+                                                  onsubmit="return confirm('Yakin hapus data?')">
+                                                <input type="hidden" name="id" th:value="${data.id}">
+                                                <button type="submit" class="btn btn-danger">Delete</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+
+        <footer th:replace="~{fragments/footer :: footer}">
+        </footer>
+    </div>
+</div>
+
+</body>
+
+</html>
+

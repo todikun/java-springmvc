@@ -2,38 +2,35 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Mahasiswa</title>
+    <title>Dosen</title>
+    <link th:href="@{/styles/style.css}" rel="stylesheet">
 </head>
 <body>
-    <h1>Index Mahasiswa</h1>
-    <a th:href="@{~/mahasiswa/add}">New Mahasiswa</a>
+    <h1>Index Dosen</h1>
+    <a th:href="@{~/dosen/add}">New Dosen</a>
     <table>
         <thead>
         <tr>
-            <td>Name</td>
+            <td>NIP</td>
+            <td>Nama</td>
             <td>Jenis Kelamin</td>
             <td>Alamat</td>
-            <td>Tempat Lahir</td>
-            <td>Tanggal Lahir</td>
-            <td>Agama</td>
-            <td>Jurusan</td>
+            <td>Gelar</td>
             <td>Action</td>
         </tr>
         </thead>
 
         <tbody>
         <tr th:each="data : ${dataList}">
+            <td th:text="${data.nip}"></td>
             <td th:text="${data.name}"></td>
             <td th:text="${data.jk}"></td>
             <td th:text="${data.alamat}"></td>
-            <td th:text="${data.tmpLahir}"></td>
-            <td th:text="${data.tglLahir}"></td>
-            <td th:text="${data.agama}"></td>
-            <td th:text="${data.jurusan.name}"></td>
+            <td th:text="${data.gelar}"></td>
             <td>
-                <a th:href="@{~/mahasiswa/detail/{id}(id=${data.id})}">Detail</a>
-                <a th:href="@{~/mahasiswa/edit/{id}(id=${data.id})}">Edit</a>
-                <form th:action="@{~/mahasiswa/delete}" method="post">
+                <a th:href="@{~/dosen/detail/{id}(id=${data.id})}">Detail</a>
+                <a th:href="@{~/dosen/edit/{id}(id=${data.id})}">Edit</a>
+                <form th:action="@{~/dosen/delete}" method="post">
                     <input type="hidden" name="id" th:value="${data.id}">
                     <button type="submit">Delete</button>
                 </form>

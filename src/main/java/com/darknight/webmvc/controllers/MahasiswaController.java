@@ -6,6 +6,7 @@ import com.darknight.webmvc.services.JurusanService;
 import com.darknight.webmvc.services.MahasiswaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -25,16 +26,22 @@ public class MahasiswaController {
     }
 
     @GetMapping
-    public ModelAndView index() {
-        ModelAndView view = new ModelAndView("mahasiswa/index.html");
+    public ModelAndView index(Model model) {
+        model.addAttribute("activePage", "mahasiswa");
+        model.addAttribute("title", "Mahasiswa");
+
+        ModelAndView view = new ModelAndView("pages/mahasiswa/index.html");
         List<MahasiswaModel> result = mahasiswaService.getAll();
         view.addObject("dataList", result);
         return view;
     }
 
     @GetMapping("/add")
-    public ModelAndView add() {
-        ModelAndView view = new ModelAndView("mahasiswa/add.html");
+    public ModelAndView add(Model model) {
+        model.addAttribute("activePage", "mahasiswa");
+        model.addAttribute("title", "Mahasiswa");
+
+        ModelAndView view = new ModelAndView("pages/mahasiswa/add.html");
         List<JurusanModel> result = jurusanService.getAll();
         view.addObject("jurusanList", result);
         return view;
@@ -47,7 +54,7 @@ public class MahasiswaController {
     }
 
     @GetMapping("/edit/{id}")
-    public ModelAndView edit(@PathVariable("id") String id) {
+    public ModelAndView edit(@PathVariable("id") String id, Model model) {
         MahasiswaModel mahasiswa = mahasiswaService.getById(id);
         if (mahasiswa == null) {
             return new ModelAndView("redirect:/mahasiswa");
@@ -55,7 +62,10 @@ public class MahasiswaController {
 
         List<JurusanModel> jurusan = jurusanService.getAll();
 
-        ModelAndView view = new ModelAndView("mahasiswa/edit.html");
+        model.addAttribute("activePage", "mahasiswa");
+        model.addAttribute("title", "Mahasiswa");
+
+        ModelAndView view = new ModelAndView("pages/mahasiswa/edit.html");
         view.addObject("data", mahasiswa);
         view.addObject("jurusanList", jurusan);
         return view;
@@ -68,13 +78,16 @@ public class MahasiswaController {
     }
 
     @GetMapping("/detail/{id}")
-    public ModelAndView detail(@PathVariable("id") String id) {
+    public ModelAndView detail(@PathVariable("id") String id, Model model) {
         MahasiswaModel mahasiswa = mahasiswaService.getById(id);
         if (mahasiswa == null) {
             return new ModelAndView("redirect:/mahasiswa");
         }
 
-        ModelAndView view = new ModelAndView("mahasiswa/detail.html");
+        model.addAttribute("activePage", "mahasiswa");
+        model.addAttribute("title", "Mahasiswa");
+
+        ModelAndView view = new ModelAndView("pages/mahasiswa/detail.html");
         view.addObject("data", mahasiswa);
         return view;
     }
