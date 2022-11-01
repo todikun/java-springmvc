@@ -4,6 +4,7 @@ import com.darknight.webmvc.models.DosenModel;
 import com.darknight.webmvc.services.DosenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -21,16 +22,22 @@ public class DosenController {
     }
 
     @GetMapping
-    public ModelAndView index() {
-        ModelAndView view = new ModelAndView("dosen/index.html");
+    public ModelAndView index(Model model) {
+        model.addAttribute("activePage", "dosen");
+        model.addAttribute("title", "Dosen");
+
+        ModelAndView view = new ModelAndView("pages/dosen/index.html");
         List<DosenModel> dosen = service.getAll();
         view.addObject("dataList", dosen);
         return view;
     }
 
     @GetMapping("/add")
-    public ModelAndView add() {
-        return new ModelAndView("dosen/add.html");
+    public ModelAndView add(Model model) {
+        model.addAttribute("activePage", "dosen");
+        model.addAttribute("title", "Dosen");
+
+        return new ModelAndView("pages/dosen/add.html");
     }
 
     @PostMapping("/save")
@@ -40,25 +47,31 @@ public class DosenController {
     }
 
     @GetMapping("/detail/{id}")
-    public ModelAndView detail(@PathVariable("id") String id) {
+    public ModelAndView detail(@PathVariable("id") String id, Model model) {
         DosenModel dosen = service.getById(id);
         if (dosen == null) {
             return new ModelAndView("redirect:/dosen");
         }
 
-        ModelAndView view = new ModelAndView("dosen/detail.html");
+        model.addAttribute("activePage", "dosen");
+        model.addAttribute("title", "Dosen");
+
+        ModelAndView view = new ModelAndView("pages/dosen/detail.html");
         view.addObject("data", dosen);
         return view;
     }
 
     @GetMapping("/edit/{id}")
-    public ModelAndView edit(@PathVariable("id") String id) {
+    public ModelAndView edit(@PathVariable("id") String id, Model model) {
         DosenModel dosen = service.getById(id);
         if (dosen == null) {
             return new ModelAndView("redirect:/dosen");
         }
 
-        ModelAndView view = new ModelAndView("dosen/edit.html");
+        model.addAttribute("activePage", "dosen");
+        model.addAttribute("title", "Dosen");
+
+        ModelAndView view = new ModelAndView("pages/dosen/edit.html");
         view.addObject("data", dosen);
         return view;
     }

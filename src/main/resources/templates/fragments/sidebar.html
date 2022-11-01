@@ -40,6 +40,24 @@
                 </a>
             </li>
 
+            <li th:class="${activePage == 'dosen'} ? 'sidebar-item active' : 'sidebar-item' ">
+                <a class="sidebar-link" th:href="@{~/dosen}">
+                    <i class="align-middle" data-feather="user"></i> <span class="align-middle">Dosen</span>
+                </a>
+            </li>
+
+            <li th:class="${activePage == 'gedung'} ? 'sidebar-item active' : 'sidebar-item' ">
+                <a class="sidebar-link" th:href="@{~/gedung}">
+                    <i class="align-middle" data-feather="home"></i> <span class="align-middle">Gedung</span>
+                </a>
+            </li>
+
+            <li th:class="${activePage == 'ruang'} ? 'sidebar-item active' : 'sidebar-item' ">
+                <a class="sidebar-link" th:href="@{~/ruang}">
+                    <i class="align-middle" data-feather="cast"></i> <span class="align-middle">Ruang</span>
+                </a>
+            </li>
+
         </ul>
 
     </div>

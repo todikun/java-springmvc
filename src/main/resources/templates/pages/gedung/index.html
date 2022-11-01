@@ -1,44 +1,56 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Gedung</title>
-    <!-- CSS only -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
-          rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
-          crossorigin="anonymous">
+<!-- Content start -->
+<div class="container-fluid p-0" xmlns:th="http://www.thymeleaf.org"
+     xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/main}"
+     layout:fragment="content">
 
-</head>
-<body>
-    <div class="container">
-        <h1>Index Gedung</h1>
-        <a th:href="@{~/gedung/add}" class="btn btn-primary">New Gedung</a>
-        <table class="table">
-            <thead>
-            <tr>
-                <th scope="col">Kode</th>
-                <th scope="col">Nama Gedung</th>
-                <th scope="col">Jumlah Lantai</th>
-                <th scope="col">Action</th>
-            </tr>
-            </thead>
-            <tbody class="table-group-divider">
-            <tr th:each="data : ${dataList}">
-                <td th:text="${data.code}"></td>
-                <td th:text="${data.name}"></td>
-                <td th:text="${data.jmlLantai}"></td>
-                <td>
-                    <a th:href="@{~/gedung/detail/{id}(id=${data.id})}" class="btn btn-secondary">Detail</a>
-                    <a th:href="@{~/gedung/edit/{id}(id=${data.id})}" class="btn btn-warning">Edit</a>
-                    <form th:action="@{~/gedung/delete}" method="post" class="d-inline" onsubmit="return confirm('Yakin hapus data?')">
-                        <input type="hidden" name="id" th:value="${data.id}">
-                        <button type="submit" class="btn btn-danger">Delete</button>
-                    </form>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+    <h1 class="h3 mb-3">Gedung</h1>
 
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <a th:href="@{~/gedung/add}"
+                       class="btn btn-primary mb-3">
+                        <i class="align-middle" data-feather="plus"></i>
+                    </a>
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">Kode</th>
+                            <th scope="col">Nama Gedung</th>
+                            <th scope="col">Jumlah Lantai</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                        </thead>
+                        <tbody class="table-group-divider">
+                        <tr th:each="data : ${dataList}">
+                            <td th:text="${data.code}"></td>
+                            <td th:text="${data.name}"></td>
+                            <td th:text="${data.jmlLantai}"></td>
+                            <td>
+                                <a class="btn btn-xs btn-secondary" th:href="@{~/gedung/detail/{id}(id=${data.id})}">
+                                    <i class="align-middle" data-feather="eye"></i>
+                                </a>
+
+                                <a class="btn btn-xs btn-warning" th:href="@{~/gedung/edit/{id}(id=${data.id})}">
+                                    <i class="align-middle" data-feather="edit"></i>
+                                </a>
+
+                                <form th:action="@{~/gedung/delete}" method="post"
+                                      class="d-inline"
+                                      onsubmit="return confirm('Yakin hapus data ?')">
+                                    <input type="hidden" name="id" th:value="${data.id}">
+                                    <button type="submit" class="btn btn-xs btn-danger">
+                                        <i class="align-middle" data-feather="trash-2"></i>
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
-</body>
-</html>
+</div>
+<!-- Content end -->

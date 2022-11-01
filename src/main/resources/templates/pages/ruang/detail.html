@@ -1,23 +1,32 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Ruang</title>
-</head>
-<body>
-    <h1>Detail Ruang</h1>
-    <form action="#">
-        <label>Kode</label> <br>
-        <input type="text" readonly="readonly" name="code" id="code" th:value="${data.code}"> <br>
+<!-- Content start -->
+<div class="container-fluid p-0" xmlns:th="http://www.thymeleaf.org"
+     xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/main}"
+     layout:fragment="content">
 
-        <label>Nama</label> <br>
-        <input type="text" readonly="readonly" name="name" id="name" th:value="${data.name}"> <br>
+    <h1 class="h3 mb-3">Detail Ruang</h1>
 
-        <label>Lantaike</label> <br>
-        <input type="text" readonly="readonly" name="lantaiKe" id="lantaiKe" th:value="${data.lantaiKe}"> <br>
+    <div class="row">
+        <div class="col-8">
+            <div class="card">
+                <div class="card-body">
+                    <form action="#">
+                        <h5 class="card-title mb-3">Kode</h5>
+                        <input readonly="readonly" type="text" class="form-control mb-3" name="code" id="code" th:value="${data.code}">
 
-        <label>Gedung</label> <br>
-        <input type="text" readonly="readonly" name="gedung" id="gedung" th:value="${data.gedung.name}">
-    </form>
-</body>
-</html>
+                        <h5 class="card-title mb-3">Nama</h5>
+                        <input readonly="readonly" type="text" class="form-control mb-3" name="name" id="name" th:value="${data.name}">
+
+                        <h5 class="card-title mb-3">Lantai ke</h5>
+                        <input readonly="readonly" type="number" class="form-control mb-3" name="lantaiKe" id="lantaiKe"
+                               th:value="${data.lantaiKe}">
+
+                        <h5 class="card-title mb-3">Gedung</h5>
+                        <input readonly="readonly" type="text" class="form-control mb-3" name="gedung" id="gedung" th:value="${data.gedung.name}">
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Content end -->

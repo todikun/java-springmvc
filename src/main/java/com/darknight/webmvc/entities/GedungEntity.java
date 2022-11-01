@@ -53,8 +53,6 @@ public class GedungEntity {
         this.id = id;
     }
 
-
-
     public GedungEntity(String code, String name, Integer jmlLantai) {
         this.code = code;
         this.name = name;
@@ -83,4 +81,8 @@ public class GedungEntity {
         ruang.setGedung(null);
     }
 
+    @PrePersist
+    public void onCreated() {
+        this.id = UUID.randomUUID().toString();
+    }
 }

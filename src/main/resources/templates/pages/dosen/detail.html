@@ -1,26 +1,35 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Dosen</title>
-</head>
-<body>
-    <h1>Detail Dosen</h1>
-    <form action="#" method="post">
-        <label>NIP</label> <br>
-        <input type="text" name="nip" id="nip" th:value="${data.nip}"> <br>
+<!-- Content start -->
+<div class="container-fluid p-0" xmlns:th="http://www.thymeleaf.org"
+     xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/main}"
+     layout:fragment="content">
 
-        <label>Nama</label> <br>
-        <input type="text" name="name" id="name" th:value="${data.name}"> <br>
+    <h1 class="h3 mb-3">Detail Dosen</h1>
 
-        <label>Jenis Kelamin</label> <br>
-        <input type="text" name="jk" id="jk" th:value="${data.jk}"> <br>
+    <div class="row">
+        <div class="col-8">
+            <div class="card">
+                <div class="card-body">
+                    <form action="#">
+                        <h5 class="card-title mb-3">NIP</h5>
+                        <input readonly="readonly" type="text" class="form-control mb-3" name="nip" id="nip" th:value="${data.nip}">
 
-        <label>Alamat</label> <br>
-        <input type="text" name="alamat" id="alamat" th:value="${data.alamat}"> <br>
+                        <h5 class="card-title mb-3">Nama</h5>
+                        <input readonly="readonly" type="text" class="form-control mb-3" name="name" id="name" th:value="${data.name}">
 
-        <label>Gelar</label> <br>
-        <input type="text" name="gelar" id="gelar" th:value="${data.gelar}"> <br>
-    </form>
-</body>
-</html>
+                        <h5 class="card-title mb-3">Jenis Kelamin</h5>
+                        <input readonly="readonly" type="text" class="form-control mb-3" name="jk" id="jk" th:value="${data.jk}">
+
+                        <h5 class="card-title mb-3">Alamat</h5>
+                        <textarea readonly="readonly" class="form-control mb-3" rows="2" placeholder="Alamat" name="alamat" id="alamat"
+                                  th:text="${data.alamat}"></textarea>
+
+                        <h5 class="card-title mb-3">Gelar</h5>
+                        <input readonly="readonly" type="text" class="form-control mb-3" name="gelar" id="gelar" th:value="${data.gelar}">
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Content end -->

@@ -22,28 +22,37 @@ public class GedungController {
     }
 
     @GetMapping
-    public ModelAndView index() {
-        ModelAndView view = new ModelAndView("gedung/index.html");
+    public ModelAndView index(Model model) {
+        model.addAttribute("activePage", "gedung");
+        model.addAttribute("title", "Gedung");
+
+        ModelAndView view = new ModelAndView("pages/gedung/index.html");
         List<GedungModel> result = service.getAll();
         view.addObject("dataList", result);
         return view;
     }
 
     @GetMapping("/detail/{id}")
-    public ModelAndView detail(@PathVariable("id") String id) {
+    public ModelAndView detail(@PathVariable("id") String id, Model model) {
         GedungModel gedung = service.getById(id);
         if (gedung == null) {
             return new ModelAndView("redirect:/gedung");
         }
 
-        ModelAndView view = new ModelAndView("gedung/detail.html");
+        model.addAttribute("activePage", "gedung");
+        model.addAttribute("title", "Gedung");
+
+        ModelAndView view = new ModelAndView("pages/gedung/detail.html");
         view.addObject("data", gedung);
         return view;
     }
 
     @GetMapping("/add")
-    public ModelAndView add() {
-        return new ModelAndView("gedung/add.html");
+    public ModelAndView add(Model model) {
+        model.addAttribute("activePage", "gedung");
+        model.addAttribute("title", "Gedung");
+
+        return new ModelAndView("pages/gedung/add.html");
     }
 
     @PostMapping("/save")
@@ -53,13 +62,16 @@ public class GedungController {
     }
 
     @GetMapping("/edit/{id}")
-    public ModelAndView edit(@PathVariable("id") String id) {
+    public ModelAndView edit(@PathVariable("id") String id, Model model) {
         GedungModel gedung = service.getById(id);
         if (gedung == null) {
             return new ModelAndView("redirect:/gedung");
         }
 
-        ModelAndView view = new ModelAndView("gedung/edit.html");
+        model.addAttribute("activePage", "gedung");
+        model.addAttribute("title", "Gedung");
+
+        ModelAndView view = new ModelAndView("pages/gedung/edit.html");
         view.addObject("data", gedung);
         return view;
     }

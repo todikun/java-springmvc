@@ -7,6 +7,7 @@ import com.darknight.webmvc.services.GedungService;
 import com.darknight.webmvc.services.RuangService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -26,28 +27,37 @@ public class RuangController {
     }
 
     @GetMapping
-    public ModelAndView index() {
-        ModelAndView view = new ModelAndView("ruang/index.html");
+    public ModelAndView index(Model model) {
+        model.addAttribute("activePage", "ruang");
+        model.addAttribute("title", "Ruang");
+
+        ModelAndView view = new ModelAndView("pages/ruang/index.html");
         List<RuangModel> ruang = ruangService.getAll();
         view.addObject("dataList", ruang);
         return view;
     }
 
     @GetMapping("/detail/{id}")
-    public ModelAndView detail(@PathVariable("id") String id) {
+    public ModelAndView detail(@PathVariable("id") String id, Model model) {
         RuangModel ruang = ruangService.getById(id);
         if (ruang == null) {
             return new ModelAndView("redirect:/ruang");
         }
 
-        ModelAndView view = new ModelAndView("ruang/detail.html");
+        model.addAttribute("activePage", "ruang");
+        model.addAttribute("title", "Ruang");
+
+        ModelAndView view = new ModelAndView("pages/ruang/detail.html");
         view.addObject("data", ruang);
         return view;
     }
 
     @GetMapping("/add")
-    public ModelAndView add(@ModelAttribute RuangModel request) {
-        ModelAndView view = new ModelAndView("ruang/add.html");
+    public ModelAndView add(@ModelAttribute RuangModel request, Model model) {
+        model.addAttribute("activePage", "ruang");
+        model.addAttribute("title", "Ruang");
+
+        ModelAndView view = new ModelAndView("pages/ruang/add.html");
         List<GedungModel> gedung = gedungService.getAll();
         view.addObject("gedungList", gedung);
         return view;
@@ -60,15 +70,18 @@ public class RuangController {
     }
 
     @GetMapping("/edit/{id}")
-    public ModelAndView edit(@PathVariable("id") String id) {
+    public ModelAndView edit(@PathVariable("id") String id, Model model) {
         RuangModel ruang = ruangService.getById(id);
         if (ruang == null) {
             return new ModelAndView("redirect:/ruang");
         }
 
+        model.addAttribute("activePage", "ruang");
+        model.addAttribute("title", "Ruang");
+
         List<GedungModel> gedung = gedungService.getAll();
 
-        ModelAndView view = new ModelAndView("ruang/edit.html");
+        ModelAndView view = new ModelAndView("pages/ruang/edit.html");
         view.addObject("data", ruang);
         view.addObject("gedungList", gedung);
         return view;
