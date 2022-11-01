@@ -1,0 +1,47 @@
+<--! Sidebar start -->
+<nav xmlns:th="http://www.thymeleaf.org" th:fragment="sidebar" id="sidebar" class="sidebar js-sidebar">
+    <div class="sidebar-content js-simplebar">
+        <a class="sidebar-brand" th:href="@{~/}">
+            <span class="align-middle">SIAKAD</span>
+        </a>
+
+        <ul class="sidebar-nav">
+            <li class="sidebar-header">
+                Pages
+            </li>
+
+            <li th:class="${activePage == 'dashboard'} ? 'sidebar-item active' : 'sidebar-item' ">
+                <a class="sidebar-link" th:href="@{~/}">
+                    <i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Dashboard</span>
+                </a>
+            </li>
+
+            <li th:class="${activePage == 'mahasiswa'} ? 'sidebar-item active' : 'sidebar-item' ">
+                <a class="sidebar-link" th:href="@{~/mahasiswa}">
+                    <i class="align-middle" data-feather="users"></i> <span class="align-middle">Mahasiswa</span>
+                </a>
+            </li>
+
+            <li th:class="${activePage == 'jurusan'} ? 'sidebar-item active' : 'sidebar-item' ">
+                <a class="sidebar-link" th:href="@{~/jurusan}">
+                    <i class="align-middle" data-feather="book-open"></i> <span class="align-middle">Jurusan</span>
+                </a>
+            </li>
+
+            <li th:class="${activePage == 'fakultas'} ? 'sidebar-item active' : 'sidebar-item' ">
+                <a class="sidebar-link" th:href="@{~/fakultas}">
+                    <i class="align-middle" data-feather="box"></i> <span class="align-middle">Fakultas</span>
+                </a>
+            </li>
+
+            <li th:class="${activePage == 'matakuliah'} ? 'sidebar-item active' : 'sidebar-item' ">
+                <a class="sidebar-link" th:href="@{~/matakuliah}">
+                    <i class="align-middle" data-feather="book"></i> <span class="align-middle">Matakuliah</span>
+                </a>
+            </li>
+
+        </ul>
+
+    </div>
+</nav>
+<--! Sidebar end -->
