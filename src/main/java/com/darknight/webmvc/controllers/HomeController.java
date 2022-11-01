@@ -1,15 +1,14 @@
 package com.darknight.webmvc.controllers;
 
-import com.darknight.webmvc.repos.FakultasRepo;
-import com.darknight.webmvc.repos.JurusanRepo;
-import com.darknight.webmvc.repos.MahasiswaRepo;
-import com.darknight.webmvc.repos.MataKuliahRepo;
+import com.darknight.webmvc.repos.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.ArrayList;
 
 @Controller
 @RequestMapping
@@ -19,13 +18,26 @@ public class HomeController {
     private JurusanRepo jurusanRepo;
     private FakultasRepo fakultasRepo;
     private MataKuliahRepo mataKuliahRepo;
+    private DosenRepo dosenRepo;
+    private GedungRepo gedungRepo;
+    private RuangRepo ruangRepo;
 
     @Autowired
-    public HomeController(MahasiswaRepo mahasiswaRepo, JurusanRepo jurusanRepo, FakultasRepo fakultasRepo, MataKuliahRepo mataKuliahRepo) {
+    public HomeController(
+            MahasiswaRepo mahasiswaRepo,
+            JurusanRepo jurusanRepo,
+            FakultasRepo fakultasRepo,
+            MataKuliahRepo mataKuliahRepo,
+            DosenRepo dosenRepo,
+            GedungRepo gedungRepo,
+            RuangRepo ruangRepo) {
         this.mahasiswaRepo = mahasiswaRepo;
         this.jurusanRepo = jurusanRepo;
         this.fakultasRepo = fakultasRepo;
         this.mataKuliahRepo = mataKuliahRepo;
+        this.dosenRepo = dosenRepo;
+        this.gedungRepo = gedungRepo;
+        this.ruangRepo = ruangRepo;
     }
 
     @GetMapping
@@ -37,6 +49,9 @@ public class HomeController {
         int jurusanCount = (int) jurusanRepo.count();
         int fakultasCount = (int) fakultasRepo.count();
         int mataKuliahCount = (int) mataKuliahRepo.count();
+        int dosenCount = (int) dosenRepo.count();
+        int gedungCount = (int) gedungRepo.count();
+        int ruangCount = (int) ruangRepo.count();
 
         model.addAttribute("activePage", "dashboard");
         model.addAttribute("title", "Dashboard");
@@ -45,6 +60,9 @@ public class HomeController {
         view.addObject("jurusan", jurusanCount);
         view.addObject("fakultas", fakultasCount);
         view.addObject("matakuliah", mataKuliahCount);
+        view.addObject("dosen", dosenCount);
+        view.addObject("gedung", gedungCount);
+        view.addObject("ruang", ruangCount);
         return view;
     }
 }
