@@ -6,6 +6,7 @@ import com.darknight.webmvc.services.FakultasService;
 import com.darknight.webmvc.services.JurusanService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -25,7 +26,10 @@ public class JurusanController {
     }
 
     @GetMapping
-    public ModelAndView index() {
+    public ModelAndView index(Model model) {
+        model.addAttribute("activePage", "jurusan");
+        model.addAttribute("title", "Jurusan");
+
         ModelAndView view = new ModelAndView("pages/jurusan/index.html");
         List<JurusanModel> result = jurusanService.getAll();
         view.addObject("dataList", result);
@@ -33,7 +37,10 @@ public class JurusanController {
     }
 
     @GetMapping("/add")
-    public ModelAndView add() {
+    public ModelAndView add(Model model) {
+        model.addAttribute("activePage", "jurusan");
+        model.addAttribute("title", "Jurusan");
+
         ModelAndView view = new ModelAndView("pages/jurusan/add.html");
         List<FakultasModel> result = fakultasService.getAll();
         view.addObject("fakultasList", result);
@@ -47,13 +54,16 @@ public class JurusanController {
     }
 
     @GetMapping("/edit/{id}")
-    public ModelAndView edit(@PathVariable("id") String id) {
+    public ModelAndView edit(@PathVariable("id") String id, Model model) {
         JurusanModel jurusan = jurusanService.getById(id);
         if (jurusan == null) {
             return new ModelAndView("redirect:/jurusan");
         }
 
         List<FakultasModel> fakultas = fakultasService.getAll();
+
+        model.addAttribute("activePage", "jurusan");
+        model.addAttribute("title", "Jurusan");
 
         ModelAndView view = new ModelAndView("pages/jurusan/edit.html");
         view.addObject("data", jurusan);
@@ -68,11 +78,14 @@ public class JurusanController {
     }
 
     @GetMapping("/detail/{id}")
-    public ModelAndView detail(@PathVariable("id") String id) {
+    public ModelAndView detail(@PathVariable("id") String id, Model model) {
         JurusanModel jurusan = jurusanService.getById(id);
         if (jurusan == null) {
             return new ModelAndView("redirect:/jurusan");
         }
+
+        model.addAttribute("activePage", "jurusan");
+        model.addAttribute("title", "Jurusan");
 
         ModelAndView view = new ModelAndView("pages/jurusan/detail.html");
         view.addObject("data", jurusan);

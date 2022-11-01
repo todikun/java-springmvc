@@ -4,6 +4,7 @@ import com.darknight.webmvc.models.FakultasModel;
 import com.darknight.webmvc.services.FakultasService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -21,16 +22,22 @@ public class FakultasController {
     }
 
     @GetMapping
-    public ModelAndView index() {
-        ModelAndView view = new ModelAndView("fakultas/index.html");
+    public ModelAndView index(Model model) {
+        model.addAttribute("activePage", "fakultas");
+        model.addAttribute("title", "Fakultas");
+
+        ModelAndView view = new ModelAndView("pages/fakultas/index.html");
         List<FakultasModel> result = service.getAll();
         view.addObject("dataList", result);
         return view;
     }
 
     @GetMapping("/add")
-    public ModelAndView add() {
-        return new ModelAndView("fakultas/add.html");
+    public ModelAndView add(Model model) {
+        model.addAttribute("activePage", "fakultas");
+        model.addAttribute("title", "Fakultas");
+
+        return new ModelAndView("pages/fakultas/add.html");
     }
 
     @PostMapping("/save")
@@ -40,13 +47,16 @@ public class FakultasController {
     }
 
     @GetMapping("/edit/{id}")
-    public ModelAndView edit(@PathVariable("id") String id) {
+    public ModelAndView edit(@PathVariable("id") String id, Model model) {
         FakultasModel fakultas = this.service.getById(id);
         if (fakultas == null) {
             return new ModelAndView("redirect:/fakultas");
         }
 
-        ModelAndView view = new ModelAndView("fakultas/edit.html");
+        model.addAttribute("activePage", "fakultas");
+        model.addAttribute("title", "Fakultas");
+
+        ModelAndView view = new ModelAndView("pages/fakultas/edit.html");
         view.addObject("data", fakultas);
         return view;
     }
@@ -58,13 +68,15 @@ public class FakultasController {
     }
 
     @GetMapping("/detail/{id}")
-    public ModelAndView detail(@PathVariable("id") String id) {
+    public ModelAndView detail(@PathVariable("id") String id, Model model) {
         FakultasModel fakultas = service.getById(id);
         if (fakultas == null) {
             return new ModelAndView("redirect:/fakultas");
         }
+        model.addAttribute("activePage", "fakultas");
+        model.addAttribute("title", "Fakultas");
 
-        ModelAndView view = new ModelAndView("fakultas/detail.html");
+        ModelAndView view = new ModelAndView("pages/fakultas/detail.html");
         view.addObject("data", fakultas);
         return view;
     }

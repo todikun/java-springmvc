@@ -1,25 +1,35 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Jurusan</title>
-</head>
-<body>
-    <h1>Add Jurusan</h1>
-    <form th:action="@{~/jurusan/save}" method="post">
-        <label>Kode</label> <br>
-        <input type="text" name="code" id="code"> <br>
+<!-- Content start -->
+<div class="container-fluid p-0" xmlns:th="http://www.thymeleaf.org"
+     xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/main}"
+     layout:fragment="content">
 
-        <label>Name</label> <br>
-        <input type="text" name="name" id="name"> <br>
+    <h1 class="h3 mb-3">Add Jurusan</h1>
 
-        <label>Fakultas</label> <br>
-        <select name="fakultas.id">
-            <option value=""></option>
-            <option th:each="data : ${fakultasList}" th:value="${data.id}" th:text="${data.name}"></option>
-        </select>
+    <div class="row">
+        <div class="col-8">
+            <div class="card">
+                <div class="card-body">
+                    <form th:action="@{~/jurusan/save}" method="post">
+                        <h5 class="card-title mb-3">Kode</h5>
+                        <input type="text" class="form-control mb-3" name="code" id="code">
 
-        <button type="submit">Simpan</button>
-    </form>
-</body>
-</html>
+                        <h5 class="card-title mb-3">Nama</h5>
+                        <input type="text" class="form-control mb-3" name="name" id="name">
+
+                        <h5 class="card-title mb-3">Fakultas</h5>
+                        <select class="form-select mb-3" name="fakultas.id">
+                            <option value=""></option>
+                            <option th:each="fakultas : ${fakultasList}" th:value="${fakultas.id}"
+                                    th:text="${fakultas.name}">
+                            </option>
+                        </select>
+
+                        <button type="submit" class="btn btn-success">Update</button>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Content end -->

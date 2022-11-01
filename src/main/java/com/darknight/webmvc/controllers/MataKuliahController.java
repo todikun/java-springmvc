@@ -4,6 +4,7 @@ import com.darknight.webmvc.models.MataKuliahModel;
 import com.darknight.webmvc.services.MataKuliahService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -21,16 +22,22 @@ public class MataKuliahController {
     }
 
     @GetMapping
-    public ModelAndView index() {
-        ModelAndView view = new ModelAndView("matakuliah/index.html");
+    public ModelAndView index(Model model) {
+        model.addAttribute("activePage", "matakuliah");
+        model.addAttribute("title", "Matakuliah");
+
+        ModelAndView view = new ModelAndView("pages/matakuliah/index.html");
         List<MataKuliahModel> mataKuliah = service.getAll();
         view.addObject("dataList", mataKuliah);
         return view;
     }
 
     @GetMapping("/add")
-    public ModelAndView add() {
-        return new ModelAndView("matakuliah/add.html");
+    public ModelAndView add(Model model) {
+        model.addAttribute("activePage", "matakuliah");
+        model.addAttribute("title", "Matakuliah");
+
+        return new ModelAndView("pages/matakuliah/add.html");
     }
 
     @PostMapping("/save")
@@ -40,25 +47,31 @@ public class MataKuliahController {
     }
 
     @GetMapping("/detail/{id}")
-    public ModelAndView detail(@PathVariable("id") String id) {
+    public ModelAndView detail(@PathVariable("id") String id, Model model) {
         MataKuliahModel mataKuliah = service.getById(id);
         if (mataKuliah == null) {
             return new ModelAndView("redirect:/matakuliah");
         }
 
-        ModelAndView view = new ModelAndView("matakuliah/detail.html");
+        model.addAttribute("activePage", "matakuliah");
+        model.addAttribute("title", "Matakuliah");
+
+        ModelAndView view = new ModelAndView("pages/matakuliah/detail.html");
         view.addObject("data", mataKuliah);
         return view;
     }
 
     @GetMapping("/edit/{id}")
-    public ModelAndView edit(@PathVariable("id") String id) {
+    public ModelAndView edit(@PathVariable("id") String id, Model model) {
         MataKuliahModel mataKuliah = service.getById(id);
         if (mataKuliah == null) {
             return new ModelAndView("redirect:/matakuliah");
         }
 
-        ModelAndView view = new ModelAndView("matakuliah/edit.html");
+        model.addAttribute("activePage", "matakuliah");
+        model.addAttribute("title", "Matakuliah");
+
+        ModelAndView view = new ModelAndView("pages/matakuliah/edit.html");
         view.addObject("data", mataKuliah);
         return view;
     }

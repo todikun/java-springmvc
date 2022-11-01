@@ -1,63 +1,46 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{fragments/meta :: html_head}">
-</head>
+<!-- Content start -->
+<div class="container-fluid p-0" xmlns:th="http://www.thymeleaf.org"
+     xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/main}"
+     layout:fragment="content">
 
-<body>
-<div class="wrapper">
-    <nav th:replace="~{fragments/sidebar :: sidebar}">
-    </nav>
+    <h1 class="h3 mb-3">Detail Mahasiswa</h1>
 
-    <div class="main">
-        <nav th:replace="~{fragments/navbar :: navbar}">
-        </nav>
+    <div class="row">
+        <div class="col-8">
+            <div class="card">
+                <div class="card-body">
+                    <form action="#">
+                        <input type="hidden" name="id" id="id" th:value="${data.id}">
+                        <h5 class="card-title mb-3">Nama</h5>
+                        <input readonly="readonly" type="text" class="form-control mb-3" name="name" id="name" th:value="${data.name}">
 
-        <main class="content">
-            <div class="container-fluid p-0">
+                        <h5 class="card-title mb-3">Jenis Kelamin</h5>
+                        <input readonly="readonly" type="text" class="form-control mb-3" name="jk" id="jk" th:value="${data.jk}">
 
-                <h1 class="h3 mb-3">Detail Mahasiswa</h1>
 
-                <div class="row">
-                    <div class="col-8">
-                        <div class="card">
-                            <div class="card-body">
-                                <form action="#">
+                        <h5 class="card-title mb-3">Alamat</h5>
+                        <textarea readonly="readonly" class="form-control mb-3" rows="2" placeholder="Alamat" name="alamat" id="alamat"
+                                  th:text="${data.alamat}"></textarea>
 
-                                    <h5 class="card-title mb-3">Nama</h5>
-                                    <input type="text" readonly="readonly" class="form-control mb-3" name="name" id="name" th:value="${data.name}">
+                        <h5 class="card-title mb-3">Tempat Lahir</h5>
+                        <input readonly="readonly" type="text" class="form-control mb-3" name="tmpLahir" id="tmpLahir"
+                               th:value="${data.tmpLahir}">
 
-                                    <h5 class="card-title mb-3">Jenis Kelamin</h5>
-                                    <input type="text" readonly="readonly" class="form-control mb-3" name="jk" id="jk" th:value="${data.jk}">
+                        <h5 class="card-title mb-3">Tanggal Lahir</h5>
+                        <input readonly="readonly" type="date" class="form-control mb-3" name="tglLahir" id="tglLahir"
+                               th:value="${data.tglLahir}">
 
-                                    <h5 class="card-title mb-3">Alamat</h5>
-                                    <textarea readonly="readonly" class="form-control mb-3" rows="2" placeholder="Alamat" name="alamat" id="alamat" th:text="${data.alamat}"></textarea>
+                        <h5 class="card-title mb-3">Agama</h5>
+                        <input readonly="readonly" type="text" class="form-control mb-3" name="agama" id="agama" th:value="${data.agama}">
 
-                                    <h5 class="card-title mb-3">Tempat Lahir</h5>
-                                    <input type="text" readonly="readonly" class="form-control mb-3" name="tmpLahir" id="tmpLahir" th:value="${data.tmpLahir}">
 
-                                    <h5 class="card-title mb-3">Tanggal Lahir</h5>
-                                    <input type="date" readonly="readonly" class="form-control mb-3" name="tglLahir" id="tglLahir" th:value="${data.tglLahir}">
+                        <h5 class="card-title mb-3">Jurusan</h5>
+                        <input readonly="readonly" type="text" class="form-control mb-3" name="jurusan" id="jurusan" th:value="${data.jurusan.name}">
+                    </form>
 
-                                    <h5 class="card-title mb-3">Agama</h5>
-                                    <input type="text" readonly="readonly" class="form-control mb-3" name="agama" id="agama" th:value="${data.agama}">
-
-                                    <h5 class="card-title mb-3">Jurusan</h5>
-                                    <input type="text" readonly="readonly" class="form-control mb-3" name="jurusan" id="jurusan" th:value="${data.jurusan.name}">
-
-                                </form>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
-        </main>
-
-        <footer th:replace="~{fragments/footer :: footer}">
-        </footer>
+        </div>
     </div>
 </div>
-
-</body>
-
-</html>
-
+<!-- Content end -->
