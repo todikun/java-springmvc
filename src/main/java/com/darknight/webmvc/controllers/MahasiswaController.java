@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -31,8 +32,10 @@ public class MahasiswaController {
         model.addAttribute("title", "Mahasiswa");
 
         ModelAndView view = new ModelAndView("pages/mahasiswa/index.html");
-        List<MahasiswaModel> result = mahasiswaService.getAll();
-        view.addObject("dataList", result);
+        List<MahasiswaModel> mahasiswa = mahasiswaService.getAll();
+        List<JurusanModel> jurusan = jurusanService.getAll();
+        view.addObject("dataList", mahasiswa);
+        view.addObject("jurusanList", jurusan);
         return view;
     }
 
@@ -48,8 +51,9 @@ public class MahasiswaController {
     }
 
     @PostMapping("/save")
-    public ModelAndView save(@ModelAttribute MahasiswaModel request) {
+    public ModelAndView save(@ModelAttribute MahasiswaModel request, RedirectAttributes redirectAttrs) {
         this.mahasiswaService.save(request);
+        redirectAttrs.addFlashAttribute("success", "Data has been successfully saved!");
         return new ModelAndView("redirect:/mahasiswa");
     }
 
@@ -93,13 +97,14 @@ public class MahasiswaController {
     }
 
     @PostMapping("/delete")
-    public ModelAndView delete(@ModelAttribute MahasiswaModel request) {
+    public ModelAndView delete(@ModelAttribute MahasiswaModel request, RedirectAttributes redirectAttrs) {
         MahasiswaModel mahasiswa = mahasiswaService.getById(request.getId());
         if (mahasiswa == null) {
             return new ModelAndView("redirect:/mahasiswa");
         }
 
         this.mahasiswaService.delete(request.getId());
+        redirectAttrs.addFlashAttribute("success", "Data has been successfully deleted!");
         return new ModelAndView("redirect:/mahasiswa");
     }
 }
