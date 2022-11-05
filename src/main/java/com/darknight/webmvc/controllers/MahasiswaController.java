@@ -9,7 +9,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -51,9 +50,8 @@ public class MahasiswaController {
     }
 
     @PostMapping("/save")
-    public ModelAndView save(@ModelAttribute MahasiswaModel request, RedirectAttributes redirectAttrs) {
+    public ModelAndView save(@ModelAttribute MahasiswaModel request) {
         this.mahasiswaService.save(request);
-        redirectAttrs.addFlashAttribute("success", "Data has been successfully saved!");
         return new ModelAndView("redirect:/mahasiswa");
     }
 
@@ -97,14 +95,13 @@ public class MahasiswaController {
     }
 
     @PostMapping("/delete")
-    public ModelAndView delete(@ModelAttribute MahasiswaModel request, RedirectAttributes redirectAttrs) {
+    public ModelAndView delete(@ModelAttribute MahasiswaModel request) {
         MahasiswaModel mahasiswa = mahasiswaService.getById(request.getId());
         if (mahasiswa == null) {
             return new ModelAndView("redirect:/mahasiswa");
         }
 
         this.mahasiswaService.delete(request.getId());
-        redirectAttrs.addFlashAttribute("success", "Data has been successfully deleted!");
         return new ModelAndView("redirect:/mahasiswa");
     }
 }

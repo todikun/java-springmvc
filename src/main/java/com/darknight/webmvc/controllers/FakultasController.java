@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -41,8 +42,9 @@ public class FakultasController {
     }
 
     @PostMapping("/save")
-    public ModelAndView save(@ModelAttribute FakultasModel request) {
+    public ModelAndView save(@ModelAttribute FakultasModel request, RedirectAttributes redirectAttrs) {
         this.service.save(request);
+        redirectAttrs.addFlashAttribute("success", "Data has been successfully saved!");
         return new ModelAndView("redirect:/fakultas");
     }
 
@@ -62,8 +64,9 @@ public class FakultasController {
     }
 
     @PostMapping("/update")
-    private ModelAndView update(@ModelAttribute FakultasModel request) {
+    private ModelAndView update(@ModelAttribute FakultasModel request, RedirectAttributes redirectAttrs) {
         this.service.update(request.getId(), request);
+        redirectAttrs.addFlashAttribute("success", "Data has been successfully updated!");
         return new ModelAndView("redirect:/fakultas");
     }
 

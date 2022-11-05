@@ -1,7 +1,8 @@
+<body xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/main}">
+
 <!-- Content start -->
-<div class="container-fluid p-0" xmlns:th="http://www.thymeleaf.org"
-     xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/main}"
-     layout:fragment="content">
+<div class="container-fluid p-0" layout:fragment="content">
 
     <h1 class="h3 mb-3">Mahasiswa</h1>
 
@@ -9,8 +10,8 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <a href="#"
-                       class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#modalForm">
+                    <a href="#" id="addBtn"
+                       class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#modalAction">
                         <i class="align-middle" data-feather="plus"></i>
                     </a>
 
@@ -20,7 +21,8 @@
                             <th scope="col" width="15%">Nama</th>
                             <th scope="col" width="5%">Jk</th>
                             <th scope="col" width="15%">Alamat</th>
-                            <th scope="col" width="15%">Ttl</th>
+                            <th scope="col" width="7%">Tempat Lahir</th>
+                            <th scope="col" width="7%">Tanggal Lahir</th>
                             <th scope="col" width="5%">Agama</th>
                             <th scope="col" width="15%">Jurusan</th>
                             <th scope="col" width="20%">Action</th>
@@ -31,26 +33,43 @@
                             <td th:text="${data.name}"></td>
                             <td th:text="${data.jk}"></td>
                             <td th:text="${data.alamat}"></td>
-                            <td th:text="${data.tmpLahir}+', '+${#temporals.format(data.tglLahir, 'dd-MM-yyyy')}"></td>
+                            <td th:text="${data.tmpLahir}"></td>
+                            <td th:text="${#temporals.format(data.tglLahir, 'dd-MM-yyyy')}"></td>
                             <td th:text="${data.agama}"></td>
                             <td th:text="${data.jurusan.name}"></td>
                             <td>
-                                <a class="btn btn-xs btn-secondary" th:href="@{~/mahasiswa/detail/{id}(id=${data.id})}">
+                                <a id="detailBtn" class="btn btn-xs btn-secondary"
+                                   href="#" data-bs-toggle="modal" data-bs-target="#modalAction"
+                                   th:attr="data-id=${data.id},
+                                   data-name=${data.name},
+                                   data-jk=${data.jk},
+                                   data-alamat=${data.alamat},
+                                   data-tmplahir=${data.tmpLahir},
+                                   data-tgllahir=${data.tglLahir},
+                                   data-agama=${data.agama},
+                                   data-jurusan=${data.jurusanId}">
                                     <i class="align-middle" data-feather="eye"></i>
                                 </a>
 
-                                <a class="btn btn-xs btn-warning" th:href="@{~/mahasiswa/edit/{id}(id=${data.id})}">
+                                <a id="editBtn" class="btn btn-xs btn-warning"
+                                   href="#" data-bs-toggle="modal" data-bs-target="#modalAction"
+                                   th:attr="data-id=${data.id},
+                                   data-name=${data.name},
+                                   data-jk=${data.jk},
+                                   data-alamat=${data.alamat},
+                                   data-tmplahir=${data.tmpLahir},
+                                   data-tgllahir=${data.tglLahir},
+                                   data-agama=${data.agama},
+                                   data-jurusan=${data.jurusanId}">
                                     <i class="align-middle" data-feather="edit"></i>
                                 </a>
 
-                                <form th:action="@{~/mahasiswa/delete}" method="post"
-                                      class="d-inline"
-                                      onsubmit="return confirm('Yakin hapus data ?')">
-                                    <input type="hidden" name="id" th:value="${data.id}">
-                                    <button type="submit" class="btn btn-xs btn-danger">
-                                        <i class="align-middle" data-feather="trash-2"></i>
-                                    </button>
-                                </form>
+                                <a id="deleteBtn" href="#"
+                                   class="btn btn-xs btn-danger" data-bs-toggle="modal" data-bs-target="#modalDelete"
+                                   th:attr="data-id=${data.id},
+                                   data-name=${data.name}">
+                                    <i class="align-middle" data-feather="trash-2"></i>
+                                </a>
                             </td>
                         </tr>
                         </tbody>
@@ -60,23 +79,35 @@
         </div>
     </div>
 
-    <!-- Modal add start -->
-    <div class="modal fade" id="modalForm" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+    <!-- Toast -->
+    <div class="toast-container position-fixed top-0 start-50 translate-middle-x p-3">
+        <div id="liveToast" class="toast align-items-center text-bg-primary border-0" role="alert" aria-live="assertive"
+             aria-atomic="true">
+            <div class="d-flex">
+                <div id="toastBody" class="toast-body"></div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
+                        aria-label="Close"></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal action start -->
+    <div class="modal fade" id="modalAction" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Add Mahasiswa</h1>
+                    <h1 class="modal-title fs-5" id="modalLabel"></h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
 
-                    <form th:action="@{~/mahasiswa/save}" id="form-add" method="post">
-
+                    <form action="#" id="form-action">
+                        <input type="hidden" name="id" id="id" value="">
                         <h5 class="card-title mb-3">Nama</h5>
-                        <input type="text" class="form-control mb-3" name="name" id="name">
+                        <input type="text" class="form-control mb-3" name="name" id="name" value="">
 
                         <h5 class="card-title mb-3">Jenis Kelamin</h5>
-                        <select class="form-select mb-3" name="jk">
+                        <select class="form-select mb-3" name="jk" id="jk">
                             <option value=""></option>
                             <option th:value="Pria">Pria</option>
                             <option th:value="Wanita">Wanita</option>
@@ -93,7 +124,7 @@
                         <input type="date" class="form-control mb-3" name="tglLahir" id="tglLahir">
 
                         <h5 class="card-title mb-3">Agama</h5>
-                        <select class="form-select mb-3" name="agama">
+                        <select class="form-select mb-3" name="agama" id="agama">
                             <option value=""></option>
                             <option th:value="Islam">Islam</option>
                             <option th:value="Kristen">Kristen</option>
@@ -102,7 +133,7 @@
                         </select>
 
                         <h5 class="card-title mb-3">Jurusan</h5>
-                        <select class="form-select mb-3" name="jurusan.id">
+                        <select class="form-select mb-3" name="jurusan.id" id="jurusan">
                             <option value=""></option>
                             <option th:each="jurusan : ${jurusanList}" th:value="${jurusan.id}"
                                     th:text="${jurusan.name}"></option>
@@ -110,36 +141,195 @@
 
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="submit" id="btn-save" class="btn btn-success">Save</button>
+                            <button type="submit" id="btn-action" class="btn btn-success">
+                                    <span class="spinner-border spinner-border-sm" role="status"
+                                          aria-hidden="true"></span>
+                            </button>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
-    <!-- Modal add end -->
+    <!-- Modal action end -->
 
-    <!-- Jquery add start -->
-    <script>
-        $(function(){
-            $('#form-add').on('submit', function(e){
+    <!-- Modal delete start -->
+    <div class="modal fade" id="modalDelete" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Delete Mahasiswa</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Are you sure to delete <strong id="deleteText"></strong> ?
+                </div>
+                <div class="modal-footer">
+                    <form action="#" id="formDelete">
+                        <input type="hidden" id="valueDelete" value="">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" id="btn-delete" class="btn btn-danger">Delete</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal delete end -->
+
+</div>
+<!-- Content end -->
+
+<script layout:fragment="client-script">
+
+        $(document).ready(function() {
+
+            // detail modal
+            $(document).on('click', '#detailBtn', function() {
+                // get data
+                var id = $(this).data('id');
+                var name = $(this).data('name');
+                var jk = $(this).data('jk');
+                var alamat = $(this).data('alamat');
+                var tmpLahir = $(this).data('tmplahir');
+                var tglLahir = $(this).data('tgllahir');
+                var agama = $(this).data('agama');
+                var jurusan = $(this).data('jurusan');
+
+                // set data to modal value
+                $('#id').val(id);
+                $('#name').val(name);
+                $('#jk').val(jk);
+                $('#alamat').val(alamat);
+                $('#tmpLahir').val(tmpLahir);
+                $('#tglLahir').val(tglLahir);
+                $('#agama').val(agama);
+                $('#jurusan').val(jurusan);
+
+                $('#modalLabel').html('Detail Mahasiswa');
+                $('#btn-action').hide();
+            });
+
+            // edit modal
+            $(document).on('click', '#editBtn', function() {
+                // get data
+                var id = $(this).data('id');
+                var name = $(this).data('name');
+                var jk = $(this).data('jk');
+                var alamat = $(this).data('alamat');
+                var tmpLahir = $(this).data('tmplahir');
+                var tglLahir = $(this).data('tgllahir');
+                var agama = $(this).data('agama');
+                var jurusan = $(this).data('jurusan');
+
+                // set data to modal value
+                $('#id').val(id);
+                $('#name').val(name);
+                $('#jk').val(jk);
+                $('#alamat').val(alamat);
+                $('#tmpLahir').val(tmpLahir);
+                $('#tglLahir').val(tglLahir);
+                $('#agama').val(agama);
+                $('#jurusan').val(jurusan);
+
+                $('#modalLabel').html('Edit Mahasiswa');
+                $('#btn-action').show();
+                $('#btn-action').html('Update');
+            });
+
+            // add modal
+            $(document).on('click', '#addBtn', function() {
+                emptyValue();
+                $('#modalLabel').html('Add Mahasiswa');
+                $('#btn-action').show();
+                $('#btn-action').html('Save');
+            });
+
+            // delete modal
+            $(document).on('click', '#deleteBtn', function() {
+                // get data
+                var id = $(this).data('id');
+                var name = $(this).data('name');
+
+                // set data to modal value
+                $('#valueDelete').val(id);
+                $('strong#deleteText').text(name);
+            });
+
+            // delete data
+            $('#formDelete').on('submit', function(e) {
                 e.preventDefault();
+
+                var id = $('input#valueDelete').val();
+                var url = "/mahasiswa/delete";
+
+                $('#btn-delete').html('Processing...');
+                $('#toastBody').html('Data has been successfully deleted!');
+
                 $.ajax({
-                    url: $('#form-add').attr("action"),
+                    url:url,
                     type: 'POST',
-                    data: $('#form-add').serialize(),
-                    success: function(response){
-                         location.reload();
+                    data: {
+                        id: id
+                    },
+                    dataType: 'html',
+                    success: function(response) {
+                        $('#modalDelete').hide();
+                        $('#liveToast').show();
+                        setInterval('location.reload()', 1200);
                     },
                     error: function(err) {
                         console.log(err);
                     }
                 });
             });
+
+            // create or update data
+            $('#form-action').on('submit', function(e) {
+                e.preventDefault();
+
+                var id = $('input#id').val();
+
+                $('#btn-action').html('Processing...');
+
+                if (id == '') {
+                    var url = "/mahasiswa/save";
+                    $('#toastBody').html('Data has been successfully saved!');
+
+                } else {
+                    var url = "/mahasiswa/update";
+                    $('#toastBody').html('Data has been successfully updated!');
+                }
+
+                $.ajax({
+                    url: url,
+                    type: "POST",
+                    data: $('#form-action').serialize(),
+                    dataType: 'html',
+                    success: function(response){
+                        $('#modalAction').hide();
+                        $('#liveToast').show();
+                        setInterval('location.reload()', 1200);
+                    },
+                    error: function(err) {
+                        console.log(err);
+                    }
+                });
+           });
+
+            // clear value
+            function emptyValue() {
+                $('#id').val(null);
+                $('#name').val(null);
+                $('#jk').val(null);
+                $('#alamat').val(null);
+                $('#tmpLahir').val(null);
+                $('#tglLahir').val(null);
+                $('#agama').val(null);
+                $('#jurusan').val(null);
+            }
+
         });
-        </script>
-    <!-- Jquery add end -->
 
+</script>
 
-</div>
-<!-- Content end -->
+</body>
