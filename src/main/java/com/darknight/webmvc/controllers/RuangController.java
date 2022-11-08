@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -64,8 +65,9 @@ public class RuangController {
     }
 
     @PostMapping("/save")
-    public ModelAndView save(@ModelAttribute RuangModel request) {
+    public ModelAndView save(@ModelAttribute RuangModel request, RedirectAttributes redirectAttrs) {
         this.ruangService.save(request);
+        redirectAttrs.addFlashAttribute("success", "Data has been successfully saved!");
         return new ModelAndView("redirect:/ruang");
     }
 
@@ -88,17 +90,20 @@ public class RuangController {
     }
 
     @PostMapping("/update")
-    public ModelAndView update(@ModelAttribute RuangModel request) {
+    public ModelAndView update(@ModelAttribute RuangModel request, RedirectAttributes redirectAttrs) {
         this.ruangService.update(request.getId(), request);
+        redirectAttrs.addFlashAttribute("success", "Data has been successfully updated!");
         return new ModelAndView("redirect:/ruang");
     }
 
     @PostMapping("/delete")
-    public ModelAndView delete(@ModelAttribute RuangModel request) {
+    public ModelAndView delete(@ModelAttribute RuangModel request, RedirectAttributes redirectAttrs) {
         RuangModel ruang = ruangService.getById(request.getId());
         if (ruang == null) {
             return new ModelAndView("redirect:/ruang");
         }
+
+        redirectAttrs.addFlashAttribute("success", "Data has been successfully deleted!");
 
         this.ruangService.delete(request.getId());
         return new ModelAndView("redirect:/ruang");
